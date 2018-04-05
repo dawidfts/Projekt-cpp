@@ -1,0 +1,2 @@
+Algorytm sortujacy przez proste wstawianie: Polega na wyszukaniu elementu majacego sie znalezc na zadanej pozycji i zamianie miejscami z tym, ktory jest tam obecnie. Operacja jest wykonywana dla wszystkich indeksow sortowanej tablicy.
+Algorytm przedstawia sie nastêpujaco: 1) wyszukaj minimalna wartosc z tablicy spoœród elementow od i do konca tablicy 2) zamien wartosc minimaln¹, z elementem na pozycji i. Gdy zamiast wartosci minimalnej wybierana bedzie maksymalna, wowczas tablica bêdzie posortowana od najwiekszego do najmniejszego elementu.
