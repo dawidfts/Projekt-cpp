@@ -135,6 +135,6 @@ int classic()
     cout <<"Wygenerowana tablica\n"<<endl;
     printArray(arr, 100);
     insertionSort(arr, 100);
-    cout <<"Posortowana tablica\n"<<endl; //test
+    cout <<"Posortowana tablica\n"<<endl; //test2
     printArray(arr, 100);
 }
