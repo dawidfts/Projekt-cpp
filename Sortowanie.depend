@@ -2,7 +2,13 @@
 1520603100 source:d:\projekt\sortowanie\main.cpp
 	<iostream>
 
-1520975529 source:d:\projekt\sortowanie\projekt-cpp\main.cpp
-	<iostream>
+1524215505 source:d:\projekt\sortowanie\projekt-cpp\main.cpp
 	<cstdlib>
+	<ctime>
+	<iostream>
+	"menu_functions.cpp"
+
+1523443791 d:\projekt\sortowanie\projekt-cpp\menu_functions.cpp
+	<iostream>
+	<fstream>
 
