@@ -4,22 +4,10 @@
 
 #include "menu_functions.cpp"
 
-int sortowanie();
-int classic();
-
-int print_headers(void)
-{
-    int user_choice;
-    cout << "Menu\nAby przejsc do wybranego punktu z wymienionych ponizej wpisz cyfre przypisana do opisu operacji.\n"
-         "1. Czesc teoretyczna\n2. Symulacje\n3. Autorzy\n4. Wyjscie\n\nTwoj wybor: ";
-    return user_choice;
-}
-
 void insertionSort(int arr[], int n)
 {
    int key, j, counter = 0;
-   for (int i = 1; i < n; i++)
-   {
+   for (int i = 1; i < n; i++){
        key = arr[i];
        j = i-1;
        while (j >= 0 && arr[j] > key){
@@ -32,20 +20,39 @@ void insertionSort(int arr[], int n)
    cout<<"\nWykonano "<<counter<<" operacji"<<endl;
 }
 
+/*void heapSort(int d[], int n)
+{
+    int j,k,x;
+    for(int i = 2; i <= n; i++){
+        j = i; k = j / 2;
+        x = d[i];
+        while((k > 0) && (d[k] < x)){
+            d[j] = d[k];
+            j = k; k = j / 2;
+        }
+        d[j] = x;
+    }
+}*/
+
 int *fill_array(int arr[], int n)
 {
     srand(time(0));
-    for (int i = 0; i < n; i++)
-   {
+    for (int i = 0; i < n; i++){
        arr[i] = rand()%1000+1;
-   }
-   return arr;
+    }
+    return arr;
+}
+
+void copy_array(int arr[], int arr_copy[], int n)
+{
+    for(int i = 0; i < n; i++){
+        arr_copy[i] = arr[i];
+    }
 }
 
 void printArray(int arr[], int n)
 {
-   int i;
-   for (i=0; i < n; i++)
+   for (int i=0; i < n; i++)
         cout << arr[i] << endl;
 }
 
@@ -64,37 +71,32 @@ void read_theory()
     }
 }
 
-int operation(int user_choice)
+int operation()
 {
     bool check = true;
+    int user_choice;
+    cout << "Menu\nAby przejsc do wybranego punktu z wymienionych ponizej wpisz cyfre przypisana do opisu operacji.\n"
+         "1. Czesc teoretyczna\n2. Symulacje\n3. Autorzy\n4. Wyjscie\n\nTwoj wybor: ";
     do{
         cin >> user_choice;
         switch(user_choice){
-        case 1:
-            read_theory();
-            check = false;
-            break;
-        case 2:
-            sortowanie();
-            check = false;
-            break;
-        case 3:
-            cout << "3";
-            check = false;
-            break;
-        case 4:
-            return 0;
-            check = false;
-            break;
-        default:
-                cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+            case 1:
+                read_theory();  check = false;break;
+            case 2:
+                sortowanie();   check = false;  break;
+            case 3:
+                cout << "3";    check = false;  break;
+            case 4:
+                return 0;   check = false;  break;
+            default:
+                    cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
     }
     }while( check == true);
 }
 
 int main(void)
 {
-    operation(print_headers());
+    operation();
     return 0;
 }
 
@@ -106,35 +108,33 @@ int sortowanie()
     do{
         cin >> user_choice;
         switch(user_choice){
-        case 1:
-            classic();
-            check = false;
-            break;
-        case 2:
-            cout << "2";
-            check = false;
-            break;
-        case 3:
-            cout << "3";
-            check = false;
-            break;
-        case 4:
-            return 0;
-            check = false;
-            break;
-        default:
-                cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+            case 1:
+                classic();  check = false;  break;
+            case 2:
+                cout << "2";    check = false;  break;
+            case 3:
+                cout << "3";    check = false;  break;
+            case 4:
+                return 0;   check = false;  break;
+            default:
+                    cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
     }
     }while( check == true);
 }
 
 int classic()
 {
-    int arr[100];
-    fill_array(arr, 100);
-    cout <<"Wygenerowana tablica\n"<<endl;
-    printArray(arr, 100);
-    insertionSort(arr, 100);
-    cout <<"Posortowana tablica\n"<<endl; //test2
-    printArray(arr, 100);
+    cout << "W klasycznym sortowaniu zostan¹ wygenerowane tablice o roznych pojemnosciach liczbami losowymi\n"
+        "i posortowane oby dwoma algorytmami a winiki zostana wyswietlone"<<endl;
+    int n = 100;
+    int arr[n]; //arr_copy[n];
+    fill_array(arr, n);
+    //copy_array(arr, arr_copy, n);
+    cout <<"Tablica o wielkosci 100 elementow zostala wypelniona...\n"<<endl;
+    //insertionSort(arr, n);
+    //printArray(arr_copy, 100);
+    //heapSort(arr_copy, n);
+    cout <<"Posortowana tablica\n"<<endl;
+    //printArray(arr_copy, 100);
+    return 0;
 }
