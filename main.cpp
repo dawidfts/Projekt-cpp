@@ -25,7 +25,7 @@ void insertionSort(long int arr[], int n)
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
     std::cout<<"printf: "<< duration <<'\n';
-    cout<<"\nWykonano "<<counter<<" operacji"<<endl;
+    cout<<"\nWykonano "<<counter<<" operacji"<<endl;//
 }
 
 /*void heapSort(int d[], int n)
