@@ -133,7 +133,7 @@ int classic_sort()
     insertionSort(arr, n);
     //heapSort(arr_copy, n);
     //printArray(arr, n);
-    return 0;//
+    return 0;
 }
 
 void read_theory()
