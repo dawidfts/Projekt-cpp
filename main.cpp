@@ -23,24 +23,34 @@ void insertionSort(long int arr[], int n)
         arr[j+1] = key;
     }
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-
-    std::cout<<"printf: "<< duration <<'\n';
-    cout<<"\nWykonano "<<counter<<" operacji"<<endl;//
+    cout << "Parametry otrzymane dla sortowania przez wstawianie: \n" << endl;
+    std::cout << "\nCzas operacji: " << duration << endl;
+    cout << "Wykonano " << counter << " operacji\n"<< endl;//
 }
 
-/*void heapSort(int d[], int n)
+void heapSort(long int arr_copy[], int n)
 {
+    std::clock_t start_h;
+    double duration_h;
+
+    start_h = std::clock();
+
+    long long int counter_h = 0;
     int j,k,x;
     for(int i = 2; i <= n; i++){
         j = i; k = j / 2;
-        x = d[i];
-        while((k > 0) && (d[k] < x)){
-            d[j] = d[k];
+        x = arr_copy[i];
+        while((k > 0) && (arr_copy[k] < x)){
+            arr_copy[j] = arr_copy[k];
             j = k; k = j / 2;
         }
-        d[j] = x;
+        arr_copy[j] = x;
     }
-}*/
+    duration_h = (std::clock() - start_h ) / (double) CLOCKS_PER_SEC;
+    cout << "Parametry otrzymane dla sortowania przez kopcowanie: \n" << endl;
+    std::cout << "\nCzas operacji: "<< duration_h << endl;
+    cout << "Wykonano: "<< counter_h << " operacji\n" << endl;
+}
 
 long int *fill_array(long int arr[], int n)
 {
@@ -51,14 +61,14 @@ long int *fill_array(long int arr[], int n)
     return arr;
 }
 
-void copy_array(int arr[], int arr_copy[], int n)
+void copy_array(long int arr[], long int arr_copy[], int n)
 {
     for(int i = 0; i < n; i++){
         arr_copy[i] = arr[i];
     }
 }
 
-void printArray(int arr[], int n)
+void printArray(long int arr[], int n)
 {
    for (int i=0; i < n; i++)
         cout << arr[i] << endl;
@@ -122,16 +132,17 @@ int classic_sort()
 {
     system("cls");
     cout << "W klasycznym sortowaniu zostana wygenerowane tablice o roznych pojemnosciach\n"
-        "liczbami losowymi i posortowane oby dwoma algorytmami a winiki zostana wyswietlone"<<endl;
+        "liczbami losowymi i posortowane obydwoma algorytmami a wyniki zostana wyswietlone"<<endl;
     int n;
     cout <<"\nPodaj pojemnosc tablicy: ";
     cin >> n;
+    cout <<"\n"<<endl;
 
-    long int arr[n]; //arr_copy[n];
+    long int arr[n], arr_copy[n];
     fill_array(arr, n);
-    //copy_array(arr, arr_copy, n);
+    copy_array(arr, arr_copy, n);
     insertionSort(arr, n);
-    //heapSort(arr_copy, n);
+    heapSort(arr_copy, n);
     //printArray(arr, n);
     return 0;
 }
