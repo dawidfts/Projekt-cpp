@@ -31,7 +31,51 @@ void insertionSort(long int arr[], int n)
     cout << "Wykonano " << counter << " operacji\n"<< endl;
 }
 
-void heapSort(long int arr_copy[], int n)
+void heapify(int t[], int i, int size)
+{
+    int largest, l, r;
+    int tmp;
+    l=left(i);
+    r=right(i);
+    largest=i;
+    if(l<=size)
+        if(t[l]>t[i])largest=l;
+
+    if(r<=size)
+        if(t[r]>t[largest])largest=r;
+
+    if (largest!=i){
+        tmp=t[i];
+        t[i]=t[largest];
+        t[largest]=tmp;
+        heapify(t, largest, size);
+    }
+}
+
+void build_heap(int t[], int size)
+{
+    int i;
+    for(i=size/2; i>0; i--)
+    heapify(t, i, size);
+}
+
+
+void heap_sort(int t[], int size)
+{
+    int i, tmp, s;
+    build_heap(t, size);
+    for(i=size; i>1; i--){
+        tmp=t[1];
+        t[1]=t[i];
+        t[i]=tmp;
+        --size;
+        heapify(t, 1, size);
+    }
+}
+
+
+
+/*void heapSort(long int arr_copy[], int n)
 {
     std::clock_t start_h;
     double duration_h;
@@ -55,7 +99,7 @@ void heapSort(long int arr_copy[], int n)
     cout << "Parametry otrzymane dla sortowania przez kopcowanie: \n" << endl;
     std::cout << "\nCzas operacji: "<< duration_h << endl;
     cout << "Wykonano: "<< counter_h << " operacji\n" << endl;
-}
+}*/
 
 long int *fill_array(long int arr[], int n)
 {
@@ -196,10 +240,11 @@ int classic_sort()
 
     long int arr[n], arr_copy[n];
     fill_array(arr, n);
-    copy_array(arr, arr_copy, n);
-    //print_before(n, arr);
     insertionSort(arr, n);
-    heapSort(arr_copy, n);
+
+    copy_array(arr, arr_copy, n);
+    int m = sizeof(arr_copy)/sizeof(arr_copy[0]);
+    heap_sort(arr_copy, m);
    // print_after(n, arr);
     return 0;
 }
