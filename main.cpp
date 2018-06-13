@@ -1,18 +1,19 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <windows.h>
 
 #include "menu_functions.cpp"
 
-#define HOW_MANY_ELEMENTS_TO_PRINT 30
 
-void insertionSort(long int arr[], int n)
+void insertionSort(long int arr[], int n, int m)
 {
+    int mode = m;
     std::clock_t start;
     double duration;
-
     start = std::clock();
     long long int counter = 0;
+
     int key, j;
     for (int i = 1; i < n; i++){
         key = arr[i];
@@ -21,111 +22,83 @@ void insertionSort(long int arr[], int n)
             arr[j+1] = arr[j];
             j = j-1;
             counter++;
+            if(mode == 1){
+                system("cls");
+                cout<<">> Algorytm przez wstawienie:\n"<<endl;
+                printArray(arr,n);
+                Sleep(1500);
+            }
         }
         arr[j+1] = key;
     }
-
-    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    cout << "Parametry otrzymane dla sortowania przez wstawianie: \n" << endl;
-    std::cout << "\nCzas operacji: " << duration << endl;
-    cout << "Wykonano " << counter << " operacji\n"<< endl;
+    if(mode == 0){
+        duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+        cout << "Parametry otrzymane dla sortowania przez wstawianie: \n" << endl;
+        std::cout << "\nCzas operacji: " << duration << endl;
+        cout << "Wykonano " << counter << " operacji\n"<< endl;
+    }
 }
 
-void heapify(int t[], int i, int size)
+void heapify (long int *tab, int heap_size, int i)
 {
-    int largest, l, r;
-    int tmp;
-    l=left(i);
-    r=right(i);
-    largest=i;
-    if(l<=size)
-        if(t[l]>t[i])largest=l;
-
-    if(r<=size)
-        if(t[r]>t[largest])largest=r;
-
+    long long int counter;
+    int largest, temp;
+    int l=2*i, r=(2*i)+1;
+    if (l<=heap_size && tab[l]>tab[i])
+        largest=l;
+    else largest=i;
+    if (r<=heap_size && tab[r]>tab[largest])
+        largest=r;
     if (largest!=i){
-        tmp=t[i];
-        t[i]=t[largest];
-        t[largest]=tmp;
-        heapify(t, largest, size);
+        temp=tab[largest];
+        tab[largest]=tab[i];
+        tab[i]=temp;
+        counter++;
+        heapify(tab,heap_size,largest);
     }
+    cout<<"Wykonano" << counter <<" operacji"<<endl;
 }
 
-void build_heap(int t[], int size)
+void budKopiec(long int *tab, int rozmiar)
 {
-    int i;
-    for(i=size/2; i>0; i--)
-    heapify(t, i, size);
+    for (int i=rozmiar/2;i>0;i--)
+        heapify(tab,rozmiar, i);
 }
 
-
-void heap_sort(int t[], int size)
+void sortowanie(long int *tab, int rozmiar)
 {
-    int i, tmp, s;
-    build_heap(t, size);
-    for(i=size; i>1; i--){
-        tmp=t[1];
-        t[1]=t[i];
-        t[i]=tmp;
-        --size;
-        heapify(t, 1, size);
+    long long counter = 0;
+    std::clock_t start;
+    double duration;
+    start = std::clock();
+
+    int temp;
+    budKopiec(tab, rozmiar);
+    for (int i=rozmiar;i>1;i--){
+        temp=tab[i];
+        tab[i]=tab[1];
+        tab[1]=temp;
+        rozmiar--;
+        heapify(tab,rozmiar,1);
     }
+    duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout << "Parametry otrzymane dla sortowania przez hip-sort: \n" << endl;
+    std::cout << "\nCzas operacji: " << duration << endl;
 }
 
-
-
-/*void heapSort(long int arr_copy[], int n)
-{
-    std::clock_t start_h;
-    double duration_h;
-
-    start_h = std::clock();
-
-    long long int counter_h = 0;
-    int j,k,x;
-    cout << arr_copy[n] << endl;
-    for(int i = 2; i <= n; i++){
-        j = i; k = j / 2;
-        x = arr_copy[i];
-        while((k > 0) && (arr_copy[k] < x)){
-            arr_copy[j] = arr_copy[k];
-            j = k; k = j / 2;
-        }
-        arr_copy[j] = x;
-    }
-
-    duration_h = (std::clock() - start_h ) / (double) CLOCKS_PER_SEC;
-    cout << "Parametry otrzymane dla sortowania przez kopcowanie: \n" << endl;
-    std::cout << "\nCzas operacji: "<< duration_h << endl;
-    cout << "Wykonano: "<< counter_h << " operacji\n" << endl;
-}*/
-
-long int *fill_array(long int arr[], int n)
+long int *fill_array(long int arr[], int n, int range)
 {
     srand(time(0));
-    for (int i = 0; i < n; i++){
-       arr[i] = rand()%1000+1;
-    }
+    for (int i = 0; i < n; i++)
+       arr[i] = rand()%range+1;
     return arr;
 }
 
 void copy_array(long int arr[], long int arr_copy[], int n)
 {
-    for(int i = 0; i < n; i++){
+    for(int i = 0; i < n; i++)
         arr_copy[i] = arr[i];
-       /// cout << arr_copy[i] << endl;
-    }
     cout << endl;
-}
-
-void printArray(long int arr[], int n)
-{
-   for (int i=0; i < n; i++)
-   {
-        cout << arr[i] << " ";
-   }
-    cout <<  endl ;
 }
 
 int main(void)
@@ -138,30 +111,26 @@ int menu()
 {
     bool check = true;
     int user_choice;
-    cout << "\t\t\t\t| Menu |\n";
-    cout << "Aby przejsc do wybranego punktu z wymienionych ponizej wpisz cyfre przypisana do opisu operacji.\n";
-    cout << "1. Czesc teoretyczna\n";
-    cout << "2. Symulacje\n";
-    cout << "3. Autorzy\n";
-    cout << "4. Wyjscie\n\n";
-    cout << "Twoj wybor: ";
     do{
+        system("cls");
+        cout << "\t\t\t\t| Menu |\n";
+        cout << "Aby przejsc do wybranego punktu z wymienionych ponizej wpisz cyfre przypisana do opisu operacji.\n"<<endl;
+        cout << "1. Symulacje\n";
+        cout << "2. Autorzy\n";
+        cout << "3. Wyjscie\n\n";
+        cout << "Twoj wybor: ";
         cin >> user_choice;
         switch(user_choice){
             case 1:
-                read_theory();
+                menu_sortowanie();
                 check = false;
                 break;
 
             case 2:
-                menu_sortowanie();
-                check = false;
+                authors();
+                check = true;
                 break;
             case 3:
-                cout << "3";
-                check = false;
-                break;
-            case 4:
                 return 0;
                 check = false;
                 break;
@@ -177,7 +146,7 @@ int menu_sortowanie()
     system("cls");
     cout <<"\t\t\t\t| Menu |\n\n";
     cout << "1. Klasyczne sortowanie \n";
-    cout << "2. \n";
+    cout << "2. Symulacja krok po kroku";
     cout << "3. \n";
     cout << "4. \n\n";
     cout << "Twoj wybor: ";
@@ -191,7 +160,7 @@ int menu_sortowanie()
                 check = false;
                 break;
             case 2:
-                cout << "2";
+                step_by_step();
                 check = false;
                 break;
             case 3:
@@ -208,26 +177,7 @@ int menu_sortowanie()
     }while( check == true);
     return 0;
 }
-void print_before(int n, long int *arr)
-{
-    if(n <= HOW_MANY_ELEMENTS_TO_PRINT)
-    {
-        cout << "Zawartosc tablicy przed posortowaniem: " << endl;
-        cout << endl;
-        printArray(arr, n);
-        cout << endl;
-        cout << endl;
-    }
-}
-void print_after(int n, long int *arr)
-{
-    if(n <= HOW_MANY_ELEMENTS_TO_PRINT)
-    {
-        cout << "Zawartosc tablicy po posortowaniu: " << endl;
-        cout << endl;
-        printArray(arr, n);
-    }
-}
+
 int classic_sort()
 {
     system("cls");
@@ -239,27 +189,53 @@ int classic_sort()
     cout <<"\n"<<endl;
 
     long int arr[n], arr_copy[n];
-    fill_array(arr, n);
-    insertionSort(arr, n);
+    fill_array(arr, n, 1000);
+    insertionSort(arr, n, 0);
 
-    copy_array(arr, arr_copy, n);
-    int m = sizeof(arr_copy)/sizeof(arr_copy[0]);
-    heap_sort(arr_copy, m);
-   // print_after(n, arr);
+    copy_array(arr, arr_copy, n+1);
+    sortowanie (arr_copy, n);
     return 0;
 }
 
-void read_theory()
+void step_by_step()
 {
-    fstream theory;
-    theory.open("theory.txt", ios :: in);
-    if(theory.good() == true){
-        cout << "dostep do pliku\n";
-        string text;
-        getline(theory,text);
-        cout << text;
-    }
-    else{
-        cout << "blad dostepu do pliku";
-    }
+    long int arr[10];
+    fill_array(arr, 10, 100);
+    system("cls");
+    cout<<"Animacja algorytmow sortowania na tablicach o 10 elementach.\n"<<endl;
+    printArray(arr, 10);
+    system("pause");
+    system("cls");
+    cout<<">> Algorytm przez wstawienie:\n"<<endl;
+    insertionSort(arr, 10, 1);
+
+    system("pause");
+
+    fill_array(arr, 10, 100);
+    system("cls");
+    cout<<">> Algorytm Hip - Sort:\n"<<endl;
+    printArray(arr, 10);
+    system("pause");
+    system("cls");
+    cout<<">> Algorytm przez wstawienie:\n"<<endl;
+    sortowanie(arr, 10);
+
+}
+
+void authors()
+{
+    system("cls");
+    cout <<"Podstawy Programowania 2"<<endl;
+    cout <<"Porojekt"<<endl;
+    cout <<"Temat: Sortwanie przez wstawienie i kopcowania"<<endl;
+    cout <<"Autorzy: Dawid Grzelczyk, Katarzyna Dawiec"<<endl;
+    cout <<"Kielce, 2018"<<endl;
+    system("pause");
+}
+
+void printArray(long int arr[], int n)
+{
+   for (int i=0; i < n; i++)
+        cout<<arr[i] << " ";
+    cout <<  endl ;
 }
