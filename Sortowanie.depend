@@ -32,3 +32,14 @@
 	<iostream>
 	<fstream>
 
+1529613402 source:c:\users\user\desktop\projekt-cpp-master1\projekt-cpp-master\main.cpp
+	<cstdlib>
+	<ctime>
+	<iostream>
+	<windows.h>
+	"menu_functions.cpp"
+
+1528915209 c:\users\user\desktop\projekt-cpp-master1\projekt-cpp-master\menu_functions.cpp
+	<iostream>
+	<fstream>
+

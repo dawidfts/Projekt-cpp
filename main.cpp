@@ -39,9 +39,9 @@ void insertionSort(long int arr[], int n, int m)
     }
 }
 
-void heapify (long int *tab, int heap_size, int i)
+long long int heapify (long int *tab, int heap_size, int i, long long int counter)
 {
-    long long int counter;
+    ///long long int counter;
     int largest, temp;
     int l=2*i, r=(2*i)+1;
     if (l<=heap_size && tab[l]>tab[i])
@@ -54,36 +54,38 @@ void heapify (long int *tab, int heap_size, int i)
         tab[largest]=tab[i];
         tab[i]=temp;
         counter++;
-        heapify(tab,heap_size,largest);
+        heapify(tab,heap_size,largest,counter);
     }
-    cout<<"Wykonano" << counter <<" operacji"<<endl;
+    return counter;
+    ///cout<<"Wykonano" << counter <<" operacji"<<endl;
 }
 
-void budKopiec(long int *tab, int rozmiar)
+void budKopiec(long int *tab, int rozmiar, long long int counter)
 {
     for (int i=rozmiar/2;i>0;i--)
-        heapify(tab,rozmiar, i);
+        heapify(tab,rozmiar, i, counter);
 }
 
 void sortowanie(long int *tab, int rozmiar)
 {
-    long long counter = 0;
+    long long int counter = 0;
     std::clock_t start;
     double duration;
     start = std::clock();
 
     int temp;
-    budKopiec(tab, rozmiar);
+    budKopiec(tab, rozmiar, counter);
     for (int i=rozmiar;i>1;i--){
         temp=tab[i];
         tab[i]=tab[1];
         tab[1]=temp;
         rozmiar--;
-        heapify(tab,rozmiar,1);
+         counter += heapify(tab,rozmiar,1, counter);
     }
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    cout << "Parametry otrzymane dla sortowania przez hip-sort: \n" << endl;
+    cout << "Parametry otrzymane dla sortowania przez heap-sort: \n" << endl;
     std::cout << "\nCzas operacji: " << duration << endl;
+    cout<<"Wykonano" << counter <<" operacji"<<endl;
 }
 
 long int *fill_array(long int arr[], int n, int range)
@@ -146,7 +148,7 @@ int menu_sortowanie()
     system("cls");
     cout <<"\t\t\t\t| Menu |\n\n";
     cout << "1. Klasyczne sortowanie \n";
-    cout << "2. Symulacja krok po kroku";
+    cout << "2. Symulacja krok po kroku\n";
     cout << "3. \n";
     cout << "4. \n\n";
     cout << "Twoj wybor: ";
@@ -160,7 +162,7 @@ int menu_sortowanie()
                 check = false;
                 break;
             case 2:
-                step_by_step();
+                ///step_by_step();
                 check = false;
                 break;
             case 3:
@@ -196,7 +198,7 @@ int classic_sort()
     sortowanie (arr_copy, n);
     return 0;
 }
-
+/*
 void step_by_step()
 {
     long int arr[10];
@@ -221,12 +223,12 @@ void step_by_step()
     sortowanie(arr, 10);
 
 }
-
+*/
 void authors()
 {
     system("cls");
-    cout <<"Podstawy Programowania 2"<<endl;
-    cout <<"Porojekt"<<endl;
+    cout <<"Algorytmy i struktury danych"<<endl;
+    cout <<"Projekt"<<endl;
     cout <<"Temat: Sortwanie przez wstawienie i kopcowania"<<endl;
     cout <<"Autorzy: Dawid Grzelczyk, Katarzyna Dawiec"<<endl;
     cout <<"Kielce, 2018"<<endl;
