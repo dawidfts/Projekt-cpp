@@ -15,27 +15,32 @@ void insertionSort(long int arr[], int n, int m)
     long long int counter = 0;
 
     int key, j;
-    for (int i = 1; i < n; i++){
+    for (int i = 1; i < n; i++)
+    {
         key = arr[i];
         j = i-1;
-        while (j >= 0 && arr[j] > key){
+        while (j >= 0 && arr[j] > key)
+        {
             arr[j+1] = arr[j];
             j = j-1;
             counter++;
-            if(mode == 1){
+            if(mode == 1)
+            {
                 system("cls");
-                cout<<">> Algorytm przez wstawienie:\n"<<endl;
+                cout<<">> Algorytm przez wstawianie:\n"<<endl;
                 printArray(arr,n);
-                Sleep(1500);
+                ///Sleep(1500);
             }
         }
         arr[j+1] = key;
     }
-    if(mode == 0){
+    if(mode == 0)
+    {
         duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
         cout << "Parametry otrzymane dla sortowania przez wstawianie: \n" << endl;
         std::cout << "\nCzas operacji: " << duration << endl;
         cout << "Wykonano " << counter << " operacji\n"<< endl;
+        Sleep(1500);
     }
 }
 
@@ -49,7 +54,8 @@ long long int heapify (long int *tab, int heap_size, int i, long long int counte
     else largest=i;
     if (r<=heap_size && tab[r]>tab[largest])
         largest=r;
-    if (largest!=i){
+    if (largest!=i)
+    {
         temp=tab[largest];
         tab[largest]=tab[i];
         tab[i]=temp;
@@ -62,7 +68,7 @@ long long int heapify (long int *tab, int heap_size, int i, long long int counte
 
 void budKopiec(long int *tab, int rozmiar, long long int counter)
 {
-    for (int i=rozmiar/2;i>0;i--)
+    for (int i=rozmiar/2; i>0; i--)
         heapify(tab,rozmiar, i, counter);
 }
 
@@ -75,24 +81,25 @@ void sortowanie(long int *tab, int rozmiar)
 
     int temp;
     budKopiec(tab, rozmiar, counter);
-    for (int i=rozmiar;i>1;i--){
+    for (int i=rozmiar; i>1; i--)
+    {
         temp=tab[i];
         tab[i]=tab[1];
         tab[1]=temp;
         rozmiar--;
-         counter += heapify(tab,rozmiar,1, counter);
+        counter = heapify(tab,rozmiar,1, counter);
     }
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
     cout << "Parametry otrzymane dla sortowania przez heap-sort: \n" << endl;
     std::cout << "\nCzas operacji: " << duration << endl;
-    cout<<"Wykonano" << counter <<" operacji"<<endl;
+    cout<<"Wykonano " << counter <<" operacji"<<endl;
 }
 
 long int *fill_array(long int arr[], int n, int range)
 {
     srand(time(0));
     for (int i = 0; i < n; i++)
-       arr[i] = rand()%range+1;
+        arr[i] = rand()%range+1;
     return arr;
 }
 
@@ -113,7 +120,8 @@ int menu()
 {
     bool check = true;
     int user_choice;
-    do{
+    do
+    {
         system("cls");
         cout << "\t\t\t\t| Menu |\n";
         cout << "Aby przejsc do wybranego punktu z wymienionych ponizej wpisz cyfre przypisana do opisu operacji.\n"<<endl;
@@ -122,24 +130,26 @@ int menu()
         cout << "3. Wyjscie\n\n";
         cout << "Twoj wybor: ";
         cin >> user_choice;
-        switch(user_choice){
-            case 1:
-                menu_sortowanie();
-                check = false;
-                break;
+        switch(user_choice)
+        {
+        case 1:
+            menu_sortowanie();
+            check = false;
+            break;
 
-            case 2:
-                authors();
-                check = true;
-                break;
-            case 3:
-                return 0;
-                check = false;
-                break;
-            default:
-                    cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+        case 2:
+            authors();
+            check = true;
+            break;
+        case 3:
+            return 0;
+            check = false;
+            break;
+        default:
+            cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+        }
     }
-    }while( check == true);
+    while( check == true);
     return 0;
 }
 
@@ -154,29 +164,32 @@ int menu_sortowanie()
     cout << "Twoj wybor: ";
     int user_choice;
     bool check = true;
-    do{
+    do
+    {
         cin >> user_choice;
-        switch(user_choice){
-            case 1:
-                classic_sort();
-                check = false;
-                break;
-            case 2:
-                ///step_by_step();
-                check = false;
-                break;
-            case 3:
-                cout << "3";
-                check = false;
-                break;
-            case 4:
-                return 0;
-                check = false;
-                break;
-            default:
-                    cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+        switch(user_choice)
+        {
+        case 1:
+            classic_sort();
+            check = false;
+            break;
+        case 2:
+            ///step_by_step();
+            check = false;
+            break;
+        case 3:
+            cout << "3";
+            check = false;
+            break;
+        case 4:
+            return 0;
+            check = false;
+            break;
+        default:
+            cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+        }
     }
-    }while( check == true);
+    while( check == true);
     return 0;
 }
 
@@ -229,7 +242,7 @@ void authors()
     system("cls");
     cout <<"Algorytmy i struktury danych"<<endl;
     cout <<"Projekt"<<endl;
-    cout <<"Temat: Sortwanie przez wstawienie i kopcowania"<<endl;
+    cout <<"Temat: Sortwanie przez wstawianie i kopcowanie"<<endl;
     cout <<"Autorzy: Dawid Grzelczyk, Katarzyna Dawiec"<<endl;
     cout <<"Kielce, 2018"<<endl;
     system("pause");
@@ -237,7 +250,7 @@ void authors()
 
 void printArray(long int arr[], int n)
 {
-   for (int i=0; i < n; i++)
+    for (int i=0; i < n; i++)
         cout<<arr[i] << " ";
     cout <<  endl ;
 }
