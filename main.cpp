@@ -203,7 +203,9 @@ int classic_sort()
     cin >> n;
     cout <<"\n"<<endl;
 
-    long int arr[n], arr_copy[n];
+    ///long int arr[n], arr_copy[n];
+    long int *arr = new long int[n];
+    long int *arr_copy = new long int[n];
     fill_array(arr, n, 1000);
     insertionSort(arr, n, 0);
 
