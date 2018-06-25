@@ -2,7 +2,8 @@
 #include <ctime>
 #include <iostream>
 #include <windows.h>
-
+#include <fstream>
+#include <sstream>
 #include "menu_functions.cpp"
 
 
@@ -98,9 +99,37 @@ void sortowanie(long int *tab, int rozmiar)
 long int *fill_array(long int arr[], int n, int range)
 {
     srand(time(0));
+    std::fstream tab;
+   std::string values;
+    std::string distance;
+    stringstream sv;
+
+    tab.open("random.txt", ios :: trunc);
+    if(tab.good() == true)
+    {
+        ///cout <<"Dostep do pliku losujacego elementy" << endl;
+        for (int i = 0; i < n; i++)
+        {
+            arr[i] = rand()%range + 1;
+            sv << arr[i]; /// send numbers to stream
+            values = sv.str(); /// change value of stream to string
+            tab << values;
+            distance = '\n';
+            tab << distance;
+        }
+        return arr;
+
+    }
+    else
+    {
+        cout <<"Blad zwiazany z plikiem losujacym elementy" << endl;
+        tab.close();
+        return 0;
+    }
+   /* srand(time(0));
     for (int i = 0; i < n; i++)
         arr[i] = rand()%range+1;
-    return arr;
+        */
 }
 
 void copy_array(long int arr[], long int arr_copy[], int n)
