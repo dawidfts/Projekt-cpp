@@ -67,3 +67,15 @@
 	<iostream>
 	<fstream>
 
+1530038208 source:c:\users\user\desktop\projekt-cpp-master test\projekt-cpp-master\main.cpp
+	<cstdlib>
+	<ctime>
+	<iostream>
+	<windows.h>
+	<fstream>
+	"menu_functions.cpp"
+
+1530031916 c:\users\user\desktop\projekt-cpp-master test\projekt-cpp-master\menu_functions.cpp
+	<iostream>
+	<fstream>
+
