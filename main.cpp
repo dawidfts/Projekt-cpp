@@ -37,7 +37,6 @@ void insertionSort(long int arr[], int n)
     Sleep(1500);
 }
 
-
 long int heapify (long int *tab, int heap_size, int i)
 {
     ///long long int counter;
@@ -60,20 +59,16 @@ long int heapify (long int *tab, int heap_size, int i)
     return 0;
 }
 
-void budKopiec(long int *tab, int rozmiar)
-{
-    for (int i=rozmiar/2; i>0; i--)
-        heapify(tab,rozmiar, i);
-}
-
 void heap_sort(long int *tab, int rozmiar)
 {
     std::clock_t start;
     double duration;
     start = std::clock();
 
+    for (int i=rozmiar/2; i>0; i--)
+        heapify(tab,rozmiar, i);
+
     int temp;
-    budKopiec(tab, rozmiar);
     for (int i=rozmiar; i>1; i--)
     {
         temp=tab[i];
