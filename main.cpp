@@ -64,11 +64,11 @@ void heap_sort(long int *tab, int rozmiar)
         heapify(tab,rozmiar, i);
 
     int temp;
-    for (int i=rozmiar; i>1; i--)
+    for (int i=rozmiar; i>0; i--)
     {
         temp=tab[i];
-        tab[i]=tab[1];
-        tab[1]=temp;
+        tab[i]=tab[0];
+        tab[0]=temp;
         rozmiar--;
         counter++;
         heapify(tab,rozmiar,1);
@@ -87,7 +87,6 @@ long int *fill_array(long int arr[], int n, int range)
     tab.open("random.txt", ios :: out);
     if(tab.good() == true)
     {
-        ///cout <<"Dostep do pliku losujacego elementy" << endl;
         for (int i = 0; i < n; i++)
         {
             arr[i] = rand()%range + 1;
@@ -123,14 +122,14 @@ void array_to_file(long int arr[], int n, int x)
     std::fstream tab;
 
     if(x==1)
-            tab.open("Hip - Sort.txt", ios :: out);
+            tab.open("Heap - Sort.txt", ios :: out);
         else
             tab.open("Insertion.txt", ios :: out);
 
     if(tab.good() == true)
     {
         if(x==1)
-            tab <<">> Wynik sortowania przez hip-sort\n"<<endl;
+            tab <<">> Wynik sortowania przez heap-sort\n"<<endl;
         else
             tab <<">> Wynik sortowania przez wstawienie\n"<<endl;
         for (int i = 0; i < n; i++)
@@ -141,9 +140,18 @@ void array_to_file(long int arr[], int n, int x)
     }
     else
     {
-        cout <<"Blad zwiazany z plikiem losujacym elementy" << endl;
-        tab.close();
-        exit(0);
+        if(x == 1)
+        {
+            cout <<"Blad zwiazany z plikiem Heap - Sort" << endl;
+            tab.close();
+            exit(0);
+        }
+        else
+        {
+            cout <<"Blad zwiazany z plikiem Inserion" << endl;
+            tab.close();
+            exit(0);
+        }
     }
 }
 

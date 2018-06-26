@@ -79,3 +79,15 @@
 	<iostream>
 	<fstream>
 
+1530046246 source:c:\users\user\desktop\dziala cpp projekt1\projekt-cpp-master\main.cpp
+	<cstdlib>
+	<ctime>
+	<iostream>
+	<windows.h>
+	<fstream>
+	"menu_functions.cpp"
+
+1530044006 c:\users\user\desktop\dziala cpp projekt1\projekt-cpp-master\menu_functions.cpp
+	<iostream>
+	<fstream>
+
