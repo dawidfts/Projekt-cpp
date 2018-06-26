@@ -23,10 +23,6 @@ void insertionSort(long int arr[], int n)
             arr[j+1] = arr[j];
             j = j-1;
             counter++;
-            system("cls");
-            cout<<">> Algorytm przez wstawianie:\n"<<endl;
-            printArray(arr,n);
-            ///Sleep(1500);
         }
         arr[j+1] = key;
     }
@@ -34,7 +30,6 @@ void insertionSort(long int arr[], int n)
     cout << "\nParametry otrzymane dla sortowania przez wstawianie:" << endl;
     std::cout << "- Czas operacji: " << duration << endl;
     cout << "- Wykonano " << counter << " operacji\n"<< endl;
-    Sleep(1500);
 }
 
 long int heapify (long int *tab, int heap_size, int i)
@@ -114,6 +109,42 @@ void copy_array(long int arr[], long int arr_copy[], int n)
     for(int i = 0; i < n; i++)
         arr_copy[i] = arr[i];
     cout << endl;
+}
+
+void printArray(long int arr[], int n)
+{
+    for (int i=0; i < n; i++)
+        cout<<arr[i] << " ";
+    cout <<  endl ;
+}
+
+void array_to_file(long int arr[], int n, int x)
+{
+    std::fstream tab;
+
+    if(x==1)
+            tab.open("Hip - Sort.txt", ios :: out);
+        else
+            tab.open("Insertion.txt", ios :: out);
+
+    if(tab.good() == true)
+    {
+        if(x==1)
+            tab <<">> Wynik sortowania przez hip-sort\n"<<endl;
+        else
+            tab <<">> Wynik sortowania przez wstawienie\n"<<endl;
+        for (int i = 0; i < n; i++)
+        {
+            tab << arr[i] <<"\n";
+        }
+
+    }
+    else
+    {
+        cout <<"Blad zwiazany z plikiem losujacym elementy" << endl;
+        tab.close();
+        exit(0);
+    }
 }
 
 int main(void)
@@ -208,10 +239,12 @@ int classic_sort()
 
     counter = 0;
     heap_sort (arr_copy, n);
+    array_to_file(arr_copy, n, 1);
     //delete arr_copy;
 
     counter = 0;
     insertionSort(arr, n);
+    array_to_file(arr, n, 0);
     return 0;
 }
 
@@ -226,9 +259,3 @@ void authors()
     system("pause");
 }
 
-void printArray(long int arr[], int n)
-{
-    for (int i=0; i < n; i++)
-        cout<<arr[i] << " ";
-    cout <<  endl ;
-}
