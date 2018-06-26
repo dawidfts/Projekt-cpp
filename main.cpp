@@ -64,11 +64,11 @@ void heap_sort(long int *tab, int rozmiar)
         heapify(tab,rozmiar, i);
 
     int temp;
-    for (int i=rozmiar; i>0; i--)
+    for (int i=rozmiar; i>1; i--)
     {
         temp=tab[i];
-        tab[i]=tab[0];
-        tab[0]=temp;
+        tab[i]=tab[1];
+        tab[1]=temp;
         rozmiar--;
         counter++;
         heapify(tab,rozmiar,1);
