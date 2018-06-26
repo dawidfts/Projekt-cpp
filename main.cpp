@@ -48,7 +48,6 @@ void insertionSort(long int arr[], int n, int m)
 
 long int heapify (long int *tab, int heap_size, int i)
 {
-    ///long long int counter;
     int largest, temp;
     int l=2*i, r=(2*i)+1;
     if (l<=heap_size && tab[l]>tab[i])
@@ -64,24 +63,19 @@ long int heapify (long int *tab, int heap_size, int i)
         heapify(tab,heap_size,largest);
     }
     return 0;
-    ///cout<<"Wykonano" << counter <<" operacji"<<endl;
-}
-
-void budKopiec(long int *tab, int rozmiar)
-{
-    for (int i=rozmiar/2; i>0; i--)
-        heapify(tab,rozmiar, i);
 }
 
 void heap_sort(long int *tab, int rozmiar)
 {
-    //long long int counter = 0;
     std::clock_t start;
     double duration;
     start = std::clock();
 
+    ///budowanie kopca
+    for (int i=rozmiar/2; i>0; i--)
+        heapify(tab,rozmiar, i);
+
     int temp;
-    budKopiec(tab, rozmiar);
     for (int i=rozmiar; i>1; i--){
         temp=tab[i];
         tab[i]=tab[1];
@@ -100,20 +94,13 @@ long int *fill_array(long int arr[], int n, int range)
 {
     srand(time(0));
     std::fstream tab;
-    std::string values;
-    std::string distance;
-    stringstream sv;
 
     tab.open("random.txt", ios :: out);
     if(tab.good() == true){
         ///cout <<"Dostep do pliku losujacego elementy" << endl;
         for (int i = 0; i < n; i++){
             arr[i] = rand()%range + 1;
-            //sv << arr[i]; /// send numbers to stream
-            //values = sv.str(); /// change value of stream to string
             tab << arr[i] <<"\n";
-            //distance = '\n';
-            //tab << distance;
         }
         return arr;
 
@@ -222,7 +209,6 @@ int classic_sort()
     cin >> n;
     cout <<"\n"<<endl;
 
-    ///long int arr[n], arr_copy[n];
     long int *arr = new long int[n];
     long int *arr_copy = new long int[n];
 
@@ -231,10 +217,11 @@ int classic_sort()
 
     counter = 0;
     heap_sort (arr_copy, n);
-    //delete arr_copy;
 
     counter = 0;
     insertionSort(arr, n, 0);
+    //delete[] arr;
+    //delete[] arr_copy;
     return 0;
 }
 /*
