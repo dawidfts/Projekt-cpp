@@ -6,6 +6,7 @@
 #include <sstream>
 #include "menu_functions.cpp"
 
+long long int counter;
 
 void insertionSort(long int arr[], int n, int m)
 {
@@ -13,7 +14,7 @@ void insertionSort(long int arr[], int n, int m)
     std::clock_t start;
     double duration;
     start = std::clock();
-    long long int counter = 0;
+    //long long int counter = 0;
 
     int key, j;
     for (int i = 1; i < n; i++)
@@ -38,14 +39,14 @@ void insertionSort(long int arr[], int n, int m)
     if(mode == 0)
     {
         duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-        cout << "Parametry otrzymane dla sortowania przez wstawianie: \n" << endl;
-        std::cout << "\nCzas operacji: " << duration << endl;
-        cout << "Wykonano " << counter << " operacji\n"<< endl;
+        cout << "\nParametry otrzymane dla sortowania przez wstawianie:" << endl;
+        std::cout << "- Czas operacji: " << duration << endl;
+        cout << "- Wykonano " << counter << " operacji\n"<< endl;
         Sleep(1500);
     }
 }
 
-long long int heapify (long int *tab, int heap_size, int i, long long int counter)
+long int heapify (long int *tab, int heap_size, int i)
 {
     ///long long int counter;
     int largest, temp;
@@ -55,81 +56,73 @@ long long int heapify (long int *tab, int heap_size, int i, long long int counte
     else largest=i;
     if (r<=heap_size && tab[r]>tab[largest])
         largest=r;
-    if (largest!=i)
-    {
+    if (largest!=i){
         temp=tab[largest];
         tab[largest]=tab[i];
         tab[i]=temp;
         counter++;
-        heapify(tab,heap_size,largest,counter);
+        heapify(tab,heap_size,largest);
     }
-    return counter;
+    return 0;
     ///cout<<"Wykonano" << counter <<" operacji"<<endl;
 }
 
-void budKopiec(long int *tab, int rozmiar, long long int counter)
+void budKopiec(long int *tab, int rozmiar)
 {
     for (int i=rozmiar/2; i>0; i--)
-        heapify(tab,rozmiar, i, counter);
+        heapify(tab,rozmiar, i);
 }
 
-void sortowanie(long int *tab, int rozmiar)
+void heap_sort(long int *tab, int rozmiar)
 {
-    long long int counter = 0;
+    //long long int counter = 0;
     std::clock_t start;
     double duration;
     start = std::clock();
 
     int temp;
-    budKopiec(tab, rozmiar, counter);
-    for (int i=rozmiar; i>1; i--)
-    {
+    budKopiec(tab, rozmiar);
+    for (int i=rozmiar; i>1; i--){
         temp=tab[i];
         tab[i]=tab[1];
         tab[1]=temp;
         rozmiar--;
-        counter = heapify(tab,rozmiar,1, counter);
+        counter++;
+        heapify(tab,rozmiar,1);
     }
     duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    cout << "Parametry otrzymane dla sortowania przez heap-sort: \n" << endl;
-    std::cout << "\nCzas operacji: " << duration << endl;
-    cout<<"Wykonano " << counter <<" operacji"<<endl;
+    cout << "Parametry otrzymane dla sortowania przez heap-sort:" << endl;
+    std::cout << "- Czas operacji: " << duration << endl;
+    cout<<"- Wykonano " << counter <<" operacji"<<endl;
 }
 
 long int *fill_array(long int arr[], int n, int range)
 {
     srand(time(0));
     std::fstream tab;
-   std::string values;
+    std::string values;
     std::string distance;
     stringstream sv;
 
-    tab.open("random.txt", ios :: trunc);
-    if(tab.good() == true)
-    {
+    tab.open("random.txt", ios :: out);
+    if(tab.good() == true){
         ///cout <<"Dostep do pliku losujacego elementy" << endl;
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++){
             arr[i] = rand()%range + 1;
-            sv << arr[i]; /// send numbers to stream
-            values = sv.str(); /// change value of stream to string
-            tab << values;
-            distance = '\n';
-            tab << distance;
+            //sv << arr[i]; /// send numbers to stream
+            //values = sv.str(); /// change value of stream to string
+            tab << arr[i] <<"\n";
+            //distance = '\n';
+            //tab << distance;
         }
         return arr;
 
     }
-    else
-    {
+    else{
         cout <<"Blad zwiazany z plikiem losujacym elementy" << endl;
         tab.close();
         return 0;
     }
-   /* srand(time(0));
-    for (int i = 0; i < n; i++)
-        arr[i] = rand()%range+1;
-        */
 }
 
 void copy_array(long int arr[], long int arr_copy[], int n)
@@ -149,8 +142,7 @@ int menu()
 {
     bool check = true;
     int user_choice;
-    do
-    {
+    do{
         system("cls");
         cout << "\t\t\t\t| Menu |\n";
         cout << "Aby przejsc do wybranego punktu z wymienionych ponizej wpisz cyfre przypisana do opisu operacji.\n"<<endl;
@@ -193,29 +185,27 @@ int menu_sortowanie()
     cout << "Twoj wybor: ";
     int user_choice;
     bool check = true;
-    do
-    {
+    do{
         cin >> user_choice;
-        switch(user_choice)
-        {
-        case 1:
-            classic_sort();
-            check = false;
-            break;
-        case 2:
-            ///step_by_step();
-            check = false;
-            break;
-        case 3:
-            cout << "3";
-            check = false;
-            break;
-        case 4:
-            return 0;
-            check = false;
-            break;
-        default:
-            cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
+        switch(user_choice){
+            case 1:
+                classic_sort();
+                check = false;
+                break;
+            case 2:
+                ///step_by_step();
+                check = false;
+                break;
+            case 3:
+                cout << "3";
+                check = false;
+                break;
+            case 4:
+                return 0;
+                check = false;
+                break;
+            default:
+                cout << "Wprowadzono niepoprawna cyfre. Podaj jeszcze raz: ";
         }
     }
     while( check == true);
@@ -235,11 +225,16 @@ int classic_sort()
     ///long int arr[n], arr_copy[n];
     long int *arr = new long int[n];
     long int *arr_copy = new long int[n];
-    fill_array(arr, n, 1000);
-    insertionSort(arr, n, 0);
 
+    fill_array(arr, n, 1000);
     copy_array(arr, arr_copy, n+1);
-    sortowanie (arr_copy, n);
+
+    counter = 0;
+    heap_sort (arr_copy, n);
+    //delete arr_copy;
+
+    counter = 0;
+    insertionSort(arr, n, 0);
     return 0;
 }
 /*
